@@ -1,6 +1,7 @@
 import openpyxl
 from openpyxl.styles import Font
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -73,29 +74,33 @@ def test_url_status_code(driver, url, sheet_urls):
         if href:  # Ensure the link is not empty
             try:
                 response = requests.head(href, allow_redirects=True)  # Check the URL status
-                if response.status_code == 404:
-                    broken_links.append(href)  # Add broken links to the list
-                    # Write details to the URL Status Sheet
+                if response.status_code == 404:  # Log only broken links
+                    broken_links.append(href)
                     sheet_urls.append([href, "Fail", "404 Not Found"])
-
-            except requests.RequestException as e:
+            except requests.RequestException as e:  # Log request errors
                 broken_links.append(href)
                 sheet_urls.append([href, "Fail", f"Request error: {str(e)}"])
         else:
-            sheet_urls.append(["Empty Link", "Fail", "No href attribute found"])
+            sheet_urls.append(["Empty Link", "Fail", "No href attribute found"])  # Log missing href attributes
 
+    # Return the test result
     if broken_links:
         return ("URL Status Code", "Fail", f"{len(broken_links)} broken links found")
-    
-    
+    else:
+        return ("URL Status Code", "Pass", "No broken links found")
 
+    
 
 # Main function to run the tests and generate the Excel report
 def main():
     # Set up the WebDriver
-    options = Options()
-    options.add_argument("--headless")  
-    driver = webdriver.Chrome(options=options)
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')  
+    options.add_argument('--disable-gpu')  
+
+    # Use Service to pass the executable path
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
     
     # Test site URL
     url = "https://www.alojamiento.io/property/apartamentos-centro-coló3n/BC-189483"
@@ -131,8 +136,6 @@ def main():
     
     # Quit the WebDriver
     driver.quit()
-
-
 
 # Execute the script
 if __name__ == "__main__":
