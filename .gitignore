@@ -11,3 +11,6 @@ env/
 # Ignore IDE-specific files (optional, depending on your IDE)
 *.idea/
 .vscode/
+
+#extra files
+footer.html
