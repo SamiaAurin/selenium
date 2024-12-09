@@ -4,10 +4,11 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from openpyxl import Workbook, load_workbook
+from openpyxl.styles import Font
 
 # Set up Selenium WebDriver with headless Chrome
 chrome_options = Options()
-chrome_options.add_argument("--headless")  # Run in headless mode (no GUI)
+#chrome_options.add_argument("--headless")  
 
 # Automatically manage ChromeDriver with webdriver_manager
 service = Service(ChromeDriverManager().install())
@@ -40,7 +41,13 @@ ws = wb.create_sheet(title="Scraped Data")
 
 # Write headers to the new sheet
 headers = ['SiteURL', 'CampaignID', 'SiteName', 'Browser', 'CountryCode', 'IP']
+
 ws.append(headers)
+
+# Make the headers bold
+bold_font = Font(bold=True)
+for cell in ws[1]: 
+    cell.font = bold_font
 
 # Write the extracted data to the new sheet
 ws.append([site_url, campaign_id, site_name, browser, country_code, ip])
