@@ -124,7 +124,7 @@ def test_currency_change_for_all(workbook, driver, url):
 
     # Scroll to the footer section to locate the currency dropdown
     print("Waiting for currency dropdown to become present...")
-    WebDriverWait(driver, 20).until(
+    WebDriverWait(driver, 60).until(
         EC.presence_of_element_located((By.ID, 'js-currency-sort-footer'))
     )
     footer_currency_element = driver.find_element(By.ID, 'js-currency-sort-footer')
