@@ -177,20 +177,33 @@ def test_currency_change_for_all(workbook, driver, url):
 
         # Compare initial and updated prices
         for i in range(len(initial_prices)):
-            card_result = "PASS (Currency changed successfully)" if initial_prices[i] != updated_prices[i] else "FAIL (Currency did not change)"
+
+            card_result = "PASS (Currency changed successfully)" if currency_text.split()[0] in updated_prices[i] else "FAIL (Currency did not change)"
             availability_result = "PASS (Currency changed successfully)" if currency_text.split()[0] in updated_availability_price else "FAIL (Currency did not change)"
             
             # Write the results into the sheet
-            sheet.append([
-                currency_text, 
-                f"Card {i + 1}",
-                initial_prices[i], 
-                updated_prices[i], 
-                card_result,
-                initial_availability_price,
-                updated_availability_price,
-                availability_result
-            ])
+            if i == 0:  # Write availability prices only for the first card of the currency
+                sheet.append([
+                    currency_text, 
+                    f"Card {i + 1}",
+                    initial_prices[i], 
+                    updated_prices[i], 
+                    card_result,
+                    initial_availability_price,
+                    updated_availability_price,
+                    availability_result
+                ])
+            else:
+                sheet.append([
+                    currency_text, 
+                    f"Card {i + 1}",
+                    initial_prices[i], 
+                    updated_prices[i], 
+                    card_result,
+                    "",  # No need to repeat availability prices
+                    "",
+                    ""
+                ])
 
         # Reopen the dropdown for the next currency
         currency_dropdown = driver.find_element(By.ID, 'js-currency-sort-footer')
