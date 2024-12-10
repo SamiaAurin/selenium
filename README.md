@@ -98,10 +98,10 @@ url = "[https://www.alojamiento.io/property/luxury-apartment-heart-madrid/HA-615
 
 | **Test Name**            | **Description**                                          |
 |--------------------------|----------------------------------------------------------|
-| H1 Tag Validation        | Checks if an H1 tag exists on the page.                  |
-| HTML Heading Sequence    | Ensures heading tags are in proper order.                |
-| Image Alt Attributes     | Verifies that all images have alt attributes.            |
-| URL Status Code Check    | Identifies broken or invalid links.                      |
+| H1 Tag Existence Test    | If H1 tag is missing it should be reported as fail.                  |
+| HTML Tag Sequence Test   | [H1-H6] tag available if any of the sequence broken or missing it should be reported as fail.|
+| Image Alt Attributes     | If image alter attribute is missing it should be reported as fail.            |
+| URL Status Code Check    | If any URL status is 404 it should be reported as fail                      |
 | Currency Filtering       | Tests if prices update when the currency changes.        |
 | Data Scraping            | Extracts campaign and browser-specific metadata. 
 
