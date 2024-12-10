@@ -67,12 +67,15 @@ This project automates testing of a vacation rental details page using Selenium.
 
 ## Project Structure
 
-   - **selenium/**
-      - `test.py`                   # Main script to execute all tests
-      - `requirements.txt`          # Python dependencies
-      - `TestReports_All.xlsx`      # Auto-generated test report (output)
-      - `.gitignore`                # Ignored files (e.g., ChromeDriver logs, temporary files)
-      - `README.md`                 # Project documentation
+   ```bash
+   selenium/
+      │
+      ├── test.py                   # Main script to execute all tests
+      ├── requirements.txt          # Python dependencies
+      ├── TestReports_All.xlsx      # Auto-generated test report (output)
+      ├── .gitignore                # Ignored files (e.g., ChromeDriver logs, temporary files)
+      └── README.md                 # Project documentation
+   ```
 
 
 ## Usage
@@ -113,7 +116,14 @@ Excel Report Example:
 
 3. **Currency Change Results:** This section records all the available currency options from the footer section of the page. For each currency, the test checks if the prices for all cards on the page update accordingly. The results for each currency change will be displayed, showing whether the price changes were applied correctly across all cards.
 
-4. **Scraped Data:** Displays site-specific data, like browser type and country code.
+4. **Scraped Data:** This script extracts the following data from the `<script>` tags in the webpage and records it in the Excel file:
+
+   - **SiteURL**: The URL of the website.
+   - **CampaignID**: The ID associated with the campaign.
+   - **SiteName**: The name of the website.
+   - **Browser**: The browser being used for the test.
+   - **CountryCode**: The country code based on the user's location.
+   - **IP**: The IP address used for accessing the page. 
 
 ###  **Generated Test Report**
 

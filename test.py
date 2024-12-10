@@ -248,7 +248,7 @@ def write_scraped_data(workbook, driver, url):
 def main():
     # Set up the WebDriver
     options = webdriver.ChromeOptions()
-    #options.add_argument('--headless')  
+    #options.add_argument('--headless')  # Uncomment it if you want it to run in headless mode.
     options.add_argument('--disable-gpu')  
 
     # Use Service to pass the executable path
