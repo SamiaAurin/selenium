@@ -1,5 +1,6 @@
 import openpyxl
 from openpyxl.styles import Font
+from openpyxl import Workbook, load_workbook
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
@@ -45,7 +46,7 @@ def test_html_tag_sequence(driver, url):
 
 
 # Image Alt Attribute Test
-def test_image_alt_attribute(driver, url):
+def test_image_alt_attribute(driver, url, workbook):
     driver.get(url)
     images = driver.find_elements(By.TAG_NAME, "img")  # Find all <img> tags on the page
     missing_alt = []  # List to store images missing the alt attribute
@@ -56,9 +57,20 @@ def test_image_alt_attribute(driver, url):
             missing_alt.append(img.get_attribute("src"))  # Store the image source for reference
 
     if missing_alt:
+        # Create a new sheet for detailed results
+        sheet = workbook.create_sheet(title="Missing Alt Attributes")
+        sheet.append(["Image Src", "Alt Status"])  # Header row
+        for cell in sheet[1]:
+            cell.font = Font(bold=True)  # Make headers bold
+
+        # Append details of each missing alt attribute
+        for src in missing_alt:
+            sheet.append([src, "Missing alt attribute"])
+
         return ("Image Alt Attribute", "Fail", f"Missing alt attribute for {len(missing_alt)} images")
     else:
         return ("Image Alt Attribute", "Pass", "All images have alt attributes")
+
 
 
 # URL Status Code Test

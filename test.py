@@ -47,17 +47,26 @@ def test_html_tag_sequence(driver, url):
 
 
 # Image Alt Attribute Test
-def test_image_alt_attribute(driver, url):
+def test_image_alt_attribute(driver, url, workbook):
     driver.get(url)
-    images = driver.find_elements(By.TAG_NAME, "img")  # Find all <img> tags on the page
+    images = driver.find_elements(By.TAG_NAME, "img")  
     missing_alt = []  # List to store images missing the alt attribute
 
     for img in images:
         alt_text = img.get_attribute("alt")
-        if not alt_text:  # Check if alt is missing or empty
+        if not alt_text:  
             missing_alt.append(img.get_attribute("src"))  # Store the image source for reference
 
     if missing_alt:
+        sheet = workbook.create_sheet(title="Img Alt Attributes")
+        sheet.append(["Image Src", "Alt Status"])  
+        for cell in sheet[1]:
+            cell.font = Font(bold=True)  # Make headers bold
+
+        # Append details of each missing alt attribute
+        for src in missing_alt:
+            sheet.append([src, "Missing alt attribute"])
+
         return ("Image Alt Attribute", "Fail", f"Missing alt attribute for {len(missing_alt)} images")
     else:
         return ("Image Alt Attribute", "Pass", "All images have alt attributes")
@@ -280,7 +289,7 @@ def main():
     sheet.append([url, test_name, status, comments])
     
     # Run the image alt attribute test
-    test_name, status, comments = test_image_alt_attribute(driver, url)
+    test_name, status, comments = test_image_alt_attribute(driver, url, workbook)
     sheet.append([url, test_name, status, comments])
     
     # Run the URL status code test
