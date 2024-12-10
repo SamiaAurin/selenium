@@ -80,7 +80,7 @@ This project automates testing of a vacation rental details page using Selenium.
 Run the Script
 
 ```bash
-python test.py
+python3 test.py #or python test.py
 ```
 The test report will be generated as `TestReports_All.xlsx.`
 
