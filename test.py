@@ -283,30 +283,34 @@ def main():
     # Run the H1 tag test
     test_name, status, comments = test_h1_tag(driver, url)
     sheet.append([url, test_name, status, comments])
-    
+    workbook.save("TestReports_All.xlsx")
+
     # Run the HTML tag sequence test
     test_name, status, comments = test_html_tag_sequence(driver, url)
     sheet.append([url, test_name, status, comments])
-    
+    workbook.save("TestReports_All.xlsx")
+
     # Run the image alt attribute test
     test_name, status, comments = test_image_alt_attribute(driver, url, workbook)
     sheet.append([url, test_name, status, comments])
-    
+    workbook.save("TestReports_All.xlsx")
+
     # Run the URL status code test
     test_name, status, comments = test_url_status_code(driver, url, sheet_urls)
     sheet.append([url, test_name, status, comments])
-    
+    workbook.save("TestReports_All.xlsx")
+
     # Run the Currency Change test
     test_name, status, comments = test_currency_change_for_all(workbook, driver, url)
     sheet.append([url, test_name, status, comments])
-
+    workbook.save("TestReports_All.xlsx")
 
     # Run the ScriptData test
     test_name, status, comments = write_scraped_data(workbook, driver, url)
     sheet.append([url, test_name, status, comments])
-
-    # Save the report
     workbook.save("TestReports_All.xlsx")
+
+    
     print("Test completed. Report saved as 'TestReports_All.xlsx'.")
     
     # Quit the WebDriver
