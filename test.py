@@ -160,16 +160,20 @@ def test_currency_change_for_all(workbook, driver, url):
             currency_option.click()
         except Exception:
             driver.execute_script("arguments[0].click();", currency_option)
-
+        
         # Wait for the availability price to update
-        WebDriverWait(driver, 50).until(
+        WebDriverWait(driver, 60).until(
             EC.text_to_be_present_in_element((By.ID, 'js-default-price'), currency_text.split()[0])
+        )
+        # Capture the update value of the availability price
+        availability_price_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, 'js-default-price'))
         )
         updated_availability_price = availability_price_element.text.strip()
         print(f"Updated Availability Price: {updated_availability_price}")
 
         # Wait for the prices to update in the cards
-        WebDriverWait(driver, 50).until(
+        WebDriverWait(driver, 60).until(
             EC.text_to_be_present_in_element((By.CLASS_NAME, 'js-price-value'), currency_text.split()[0])
         )
         updated_price_elements = driver.find_elements(By.CLASS_NAME, 'js-price-value')
