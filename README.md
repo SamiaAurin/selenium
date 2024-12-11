@@ -158,7 +158,7 @@ While running this project, the following issues might be encountered:
    ```bash 
    options.add_argument('--headless') 
    ``` 
-   If you require visualization during testing, you can uncomment this line to disable headless mode.
+   If you do not require visualization during testing, you can uncomment this line to enable headless mode.
 
 
 5. **Timeout Errors:** Increase the wait time for elements using WebDriver's explicit waits (WebDriverWait) if elements take longer to load on your network. For Example, In the following code snippet:
