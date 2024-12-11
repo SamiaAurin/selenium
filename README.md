@@ -12,7 +12,7 @@ This project automates testing of a vacation rental details page using Selenium.
 4. [Project Structure](#project-structure)
 5. [Usage](#usage)
 6. [Report Model](#report-model)
-
+7. [Known Issues and Troubleshooting](#known-issues-and-troubleshooting)
 ---
 
 ## **Features**
@@ -87,9 +87,8 @@ python3 test.py #or python test.py
 ```
 The test report will be generated as `TestReports_All.xlsx.`
 
-Customize the URL
-
-Update the `url` variable in `test.py` to test a different webpage:
+**Note:**
+The testing is being conducted on the following website: https://www.alojamiento.io/. This is the homepage URL, but you are welcome to use any other URL from the same website for testing. Please ensure that you verify and use the correct attribute identifiers (e.g., class names, IDs, XPaths) for accurate results. If you want to ustomize the URL, update the `url` variable in `test.py` to test a different webpage of the same website.
 
 url = "[https://www.alojamiento.io/property/luxury-apartment-heart-madrid/HA-6156815498](https://www.alojamiento.io/property/luxury-apartment-heart-madrid/HA-6156815498)"
 
@@ -140,3 +139,34 @@ The `Test Report` sheet of the `TestReport_All.xlsx` will be structured as follo
 
 ---
 
+## Known Issues and Troubleshooting
+
+While running this project, the following issues might be encountered:
+
+
+1. **Driver Compatibility**: Ensure the correct version of the WebDriver is installed for your browser. Use tools like `webdriver-manager` for automatic version management.
+
+2. **Dependency Installation**: If installing dependencies from `requirements.txt` fails, try clearing the pip cache using:
+
+   ```bash
+   pip install --no-cache-dir -r requirements.txt
+   ```
+3. **Attribute Identification:** Verify that attribute names (e.g., class names, IDs, or XPaths) used in the code match the current structure of the website being tested.
+
+4. **Resource Limitations:** Running the project in a headless browser mode (--headless) can reduce resource usage and may resolve performance issues on low-end devices. In the test.py file, the following line of code is already commented:
+
+   ```bash 
+   options.add_argument('--headless') 
+   ``` 
+   If you require visualization during testing, you can uncomment this line to disable headless mode.
+
+
+5. **Timeout Errors:** Increase the wait time for elements using WebDriver's explicit waits (WebDriverWait) if elements take longer to load on your network. For Example, In the following code snippet:
+
+    ```bash
+    WebDriverWait(driver, 60).until(
+        EC.presence_of_element_located((By.ID, 'js-currency-sort-footer'))
+    )
+    ```
+   The value `60` specifies a wait time of 60 seconds. You can adjust this value as needed to increase the maximum wait time. Similarly, the wait time can be modified for other WebDriverWait functions in the `test.py` file as well.
+    
